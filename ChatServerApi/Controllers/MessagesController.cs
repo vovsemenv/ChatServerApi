@@ -14,7 +14,7 @@ namespace ChatServerApi.Controllers
     public class MessagesController : ControllerBase
     {
             private ConnectionMultiplexer redis;
-            IDatabase db;
+            IDatabase db;//redissource
 
             public MessagesController()
             {
