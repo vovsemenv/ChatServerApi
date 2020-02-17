@@ -18,7 +18,24 @@ namespace ChatServerApi.Controllers
 
             public MessagesController()
             {
-                redis = ConnectionMultiplexer.Connect("localhost");
+            ConfigurationOptions config = new ConfigurationOptions
+            {
+                EndPoints =
+                {
+                    { "redis-16883.c56.east-us.azure.cloud.redislabs.com", 16883 },
+                    
+                },
+                CommandMap = CommandMap.Create(new HashSet<string>
+                    { // EXCLUDE a few commands
+                        "INFO", "CONFIG", "CLUSTER",
+                        "PING", "ECHO", "CLIENT"
+                    }, available: false),
+                KeepAlive = 180,
+                DefaultVersion = new Version(5, 0, 4),
+                Password = "vpTq6IUvudoLR4PwnXw7IDSRnckG12ZH"
+            };
+
+            redis = ConnectionMultiplexer.Connect(config);
                 db = redis.GetDatabase();
 
             }
