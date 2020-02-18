@@ -29,7 +29,7 @@ namespace ChatServerApi
             services.AddCors(options =>
             {
                 options.AddPolicy(AnyOriginPolycy,
-                builder => builder.AllowAnyOrigin());
+                builder => builder.AllowAnyOrigin().AllowAnyHeader());
             });
         }
 
