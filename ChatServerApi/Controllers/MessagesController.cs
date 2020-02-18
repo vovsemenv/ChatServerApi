@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Redis;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Cors;
 
 namespace ChatServerApi.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class MessagesController : ControllerBase
@@ -37,16 +39,16 @@ namespace ChatServerApi.Controllers
 
             redis = ConnectionMultiplexer.Connect(config);
                 db = redis.GetDatabase();
-
+            
             }
-
+            
             //GET: api/Messages
             [HttpGet]
             public IEnumerable<Message> Get()
             {
 
                 var res = db.Execute("get", "messages");
-                var arr = new List<Message>();
+                
                 if (res.IsNull)
                 {
                     return new List<Message>();
